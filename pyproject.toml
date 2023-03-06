@@ -9,6 +9,7 @@ packages = [{include = "course_3"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "^2.28.2"
+data = "^0.4"
 
 
 [tool.poetry.group.vev.dependencies]

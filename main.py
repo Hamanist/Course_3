@@ -1,8 +1,9 @@
-
+from func_json import data_to_json
 
 
 def main():
-    pass
+    data = data_to_json()
+    return len(data['id'])
 
 
 
