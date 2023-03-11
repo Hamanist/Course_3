@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 
 def data_to_json():
@@ -10,15 +11,40 @@ def data_to_json():
         return data
 
 
-def filter_data(data):
+def filter_data(data, filter_from=False):
     '''
-
     :param data: Данные из Json
-    :return:
+    :return: Фильтруем JSON по ключу 'state" с значением 'executed'
     '''
     filters = [key for key in data if 'state' in key and key['state'] == 'EXECUTED']
+    if filter_from:
+        filters = [key for key in data if 'from' in key]
+
     return filters
 
 
-# filter_data(data)
-# print(data_to_json())
+def last_executed(data, latest_values):
+    data = sorted(data, key=lambda x: x['date'], reverse=True)
+    return data[:latest_values]
+
+
+def data_formatting(data):
+    formatting = []
+    for formattings in data:
+        date = datetime.strptime(formattings['date'], "%Y-%m-%dT%H:%M:%S.%f").strftime('%d.%m.%Y')
+        description = formattings['description']
+
+        sender = formattings['from'].split()
+        sender_bill = sender.pop(-1)
+        sender_bill = f'{sender_bill[:4]} {sender_bill[4:6]}** ****{sender_bill[-4:]}'
+        sender_info = f"{' '.join(sender)} {sender_bill}"
+
+        recipient = f"Счет **{formattings['to'][-4:]}"
+        loot = f"{formattings['operationAmount']['amount']} {formattings['operationAmount']['currency']['name']}"
+        formatting.append(f'''\
+{date} {description}
+{sender_info} -> {recipient}
+{loot}
+''')
+
+    return formatting
