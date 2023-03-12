@@ -1,7 +1,8 @@
 from function import data_to_json, filter_data, last_executed, data_formatting
 
+# Переменная для вывода кол-ва значений 'execute'
 LATEST_VALUES = 5
-FILTER_FROM = True
+FILTER_FROM = True      # Переменная для поиска ключа 'from'
 
 
 def main():
