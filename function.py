@@ -34,16 +34,19 @@ def data_formatting(data):
         date = datetime.strptime(formattings['date'], "%Y-%m-%dT%H:%M:%S.%f").strftime('%d.%m.%Y')
         description = formattings['description']
 
-        sender = formattings['from'].split()
-        sender_bill = sender.pop(-1)
-        sender_bill = f'{sender_bill[:4]} {sender_bill[4:6]}** ****{sender_bill[-4:]}'
-        sender_info = f"{' '.join(sender)} {sender_bill}"
+        if 'from' in formattings:
+            sender = formattings['from'].split()
+            sender_bill = sender.pop(-1)
+            sender_bill = f'{sender_bill[:4]} {sender_bill[4:6]}** ****{sender_bill[-4:]}'
+            sender_info = ' '.join(sender)
+        else:
+            sender_bill, sender_info = '', '[СКРЫТО]'
 
         recipient = f"Счет **{formattings['to'][-4:]}"
         loot = f"{formattings['operationAmount']['amount']} {formattings['operationAmount']['currency']['name']}"
         formatting.append(f'''\
 {date} {description}
-{sender_info} -> {recipient}
+{sender_info} {sender_bill}-> {recipient}
 {loot}
 ''')
 
