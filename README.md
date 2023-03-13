@@ -20,3 +20,34 @@ ___
 - Номер счета замаскирован и не отображается целиком в формате  **XXXX 
 (видны только последние 4 цифры номера счета).
 ___
+## Библиотеки
+
+### Poetry
+```[tool.poetry]
+name = "course-3"
+version = "0.1.0"
+description = ""
+authors = ["Andrey <hamanist@gmail.com>"]
+readme = "README.md"
+packages = [{include = "course_3"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.2"
+data = "^0.4"
+
+
+[tool.poetry.group.vev.dependencies]
+coverage = "^7.2.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.2"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+
